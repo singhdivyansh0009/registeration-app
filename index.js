@@ -13,8 +13,7 @@ const __dirname = dirname(__filename);
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-const mongoURI = "mongodb+srv://divyanshkrsingh200:Aman9534328052@cluster0.jo8nygw.mongodb.net/?retryWrites=true&w=majority";
+const mongoURI = process.env.MONGODB_URI || "fallback_connection_string_here";
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
@@ -112,7 +111,7 @@ app.use(express.static(path.join(__dirname,'./client/build')))
 app.get('*',(req,res)=>{
   res.sendFile(path.join(__dirname,"./client/build/index.html"))
 })
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
