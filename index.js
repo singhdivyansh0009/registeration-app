@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const mongoURI = process.env.MONGODB_URI || "fallback_connection_string_here";
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
 
