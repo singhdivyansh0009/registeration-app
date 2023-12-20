@@ -5,6 +5,9 @@ import bcrypt from 'bcrypt';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
+console.log(process.env.PORT, process.env.MONGODB_URI);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,7 +16,8 @@ const __dirname = dirname(__filename);
 const app = express();
 app.use(express.json());
 app.use(cors());
-const mongoURI = process.env.MONGODB_URI || "fallback_connection_string_here";
+
+const mongoURI= process.env.MONGODB_URI;
 mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
@@ -111,7 +115,8 @@ app.use(express.static(path.join(__dirname,'./client/build')))
 app.get('*',(req,res)=>{
   res.sendFile(path.join(__dirname,"./client/build/index.html"))
 })
-const PORT = process.env.PORT || 8000;
+
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
